@@ -41,6 +41,12 @@ class RouteServiceProvider extends ServiceProvider
                 		->prefix('all')
                 		->as('all.')
                 		->group(base_path('routes/all.php'));
+
+            // All DORH users
+            Route::middleware(['web','auth'])
+                		->prefix('dorh')
+                		->as('dorh.')
+                		->group(base_path('routes/dorh.php'));
         });
     }
 }

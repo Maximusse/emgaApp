@@ -46,7 +46,7 @@
           </li>
           {{-- Utilisateur --}}
           <li class="nav-item">
-            <a href="{{ route('/') }}" class="nav-link">
+            <a href="{{ route('dorh.utilisateurs') }}" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Utilisateurs

@@ -25,6 +25,10 @@
   <link rel="stylesheet" href="{{ asset('frontend/plugins/daterangepicker/daterangepicker.css') }}">
   <!-- summernote -->
   <link rel="stylesheet" href="{{ asset('frontend/plugins/summernote/summernote-bs4.min.css') }}">
+    <!-- SweetAlert2 -->
+<link rel="stylesheet" href="{{ asset('frontend/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
+<!-- Toastr -->
+<link rel="stylesheet" href="{{ asset('frontend/plugins/toastr/toastr.min.css') }}">
   <livewire:styles />
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -76,6 +80,13 @@
 <script src="{{ asset('frontend/dist/js/demo.js') }}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{ asset('frontend/dist/js/pages/dashboard.js') }}"></script>
+<!-- SweetAlert2 -->
+<script src="{{ asset('frontend/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+<!-- Toastr -->
+<script src="{{ asset('frontend/plugins/toastr/toastr.min.js') }}"></script>
+
+
+<script src="{{ asset('frontend/myJs.js') }}"></script>
 <livewire:scripts />
 </body>
 </html>

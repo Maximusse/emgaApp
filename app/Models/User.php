@@ -33,6 +33,7 @@ class User extends Authenticatable
         'code_user',
         'name',
         'email',
+        'status',
         'is_active',
         'password',
         'roles_id',
