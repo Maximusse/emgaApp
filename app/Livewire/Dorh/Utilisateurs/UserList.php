@@ -28,6 +28,89 @@ class UserList extends Component
     public function showModal(){
         $this->dispatch('show-modal',['modal' => '#addUserModal']);
     }
+    
+    public $selectedUser;
+
+    public function showUserDetails($userId) {
+        $this->selectedUser = User::find($userId);
+        if ($this->selectedUser) {
+            // Déclenche l'affichage de la modale avec les détails de l'utilisateur
+            $this->dispatch('show-modal', ['modal' => '#userDetailsModal']);
+        }
+    }
+    
+    public function toggleStatus($userId) {
+        $status = null;
+        $user = User::find($userId);
+        if($user->is_active == 1){
+            $status = 0;
+            // $data = ['is_active' => 0];
+            // $user->is_active = 0;
+        }
+        if($user->is_active == 0){
+            $status = 1;
+            // $data = ['is_active' => 1];
+            // $user->is_active = 1;
+        }
+        // $user->status = !$user->status;
+        // $user->update($data);
+        $user->is_active = $status;
+        $user->save();
+        // session()->flash('message', 'Statut mis à jour avec succès.');
+    }
+    
+   
+               
+
+    public $editingUser;
+
+    public function editUser($userId) {
+        $this->editingUser = User::find($userId);
+    
+        if ($this->editingUser) {
+            // Charger les données de l'utilisateur dans le tableau d'état pour le formulaire
+            $this->state = [
+                'identifiant' => $this->editingUser->email,
+                'nom' => $this->editingUser->name,
+                'role' => $this->editingUser->roles_id,
+                'type' => $this->editingUser->types_users_id,
+            ];
+    
+            // Déclencher l'ouverture de la modale de modification
+            $this->dispatch('show-modal', ['modal' => '#editUserModal']);
+        }
+    }
+
+       // prise en compte dans le
+    public function updateUser() {
+        if ($this->editingUser) {
+            $this->validate([
+                'state.nom' => 'required|min:2',
+                'state.identifiant' => 'required|email',
+                'state.role' => 'required|exists:roles,id',
+                'state.type' => 'required|exists:type_users,id',
+            ]);
+    
+            // Mettre à jour les informations de l'utilisateur
+            $this->editingUser->update([
+                'name' => $this->state['nom'],
+                'email' => $this->state['identifiant'],
+                'roles_id' => $this->state['role'],
+                'types_users_id' => $this->state['type'],
+            ]);
+    
+            // Fermer la modale et afficher un message de succès
+            $this->dispatch('hide-modal', ['modal' => '#editUserModal']);
+            session()->flash('message', 'Utilisateur mis à jour avec succès.');
+    
+            // Actualiser la liste des utilisateurs
+            $this->render();
+        }
+    }
+
+
+     
+
 
     public function addUserRules(){
         Validator::make(
@@ -49,11 +132,11 @@ class UserList extends Component
                 'type.exists' => "Type introuvable.",
             ]
         )->validate();
+        
     }
 
     public function asking(){
         $this->addUserRules();
-        // dd('Formulaire envoyé');
         // Declencher l'evenement show-modal au niveau du fichier javascript
         $this->dispatch('success-toast-hide-modal',['title' => "Terminer",'msg' => "Utilisateur enregistrer avec succès", 'modal' => '#addUserModal']);
         
@@ -71,6 +154,12 @@ class UserList extends Component
         return TypeUsers::all();
     }
 
+    public function viewDetails($id)
+{
+    $this->selectedUser = User::find($id);
+    $this->dispatchBrowserEvent('show-details-modal');
+}
+
     public function render()
     {
         $data = [
@@ -80,4 +169,6 @@ class UserList extends Component
         ];
         return view('livewire.dorh.utilisateurs.user-list',$data);
     }
+    
 }
+

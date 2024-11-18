@@ -47,6 +47,28 @@ class RouteServiceProvider extends ServiceProvider
                 		->prefix('dorh')
                 		->as('dorh.')
                 		->group(base_path('routes/dorh.php'));
+
+            // All DIVISION users
+            Route::middleware(['web','auth'])
+            ->prefix('division')
+            ->as('division.')
+            ->group(base_path('routes/division.php'));
+
+
+            // All COMPAGNIE users
+            Route::middleware(['web','auth'])
+            ->prefix('compagnie')
+            ->as('compagnie.')
+            ->group(base_path('routes/compagnie.php'));
+
+
+            // All MESSE users
+            Route::middleware(['web','auth'])
+            ->prefix('messe')
+            ->as('messe.')
+            ->group(base_path('routes/messe.php'));
+
+
         });
     }
 }

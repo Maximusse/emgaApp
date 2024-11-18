@@ -36,12 +36,12 @@
 
     @include('layouts.partials.navbar')
     @include('layouts.partials.aside')
-  <!-- Page content -->
-  <div class="content-wrapper">
-    {{$slot}}
-  </div>
-  <!-- /.Page content -->
-  @include('layouts.partials.footer')
+    <!-- Page content -->
+    <div class="content-wrapper">
+      {{$slot}}
+    </div>
+    <!-- /.Page content -->
+    @include('layouts.partials.footer')
 
 
   
